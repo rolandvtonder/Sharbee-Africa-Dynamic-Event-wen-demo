@@ -1,0 +1,9 @@
+# Apache / cPanel hosting: send every page URL (e.g. /services/learner-tours)
+# to index.html so the site's own router can show the right page.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

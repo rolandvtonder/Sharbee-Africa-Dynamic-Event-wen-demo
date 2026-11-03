@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+/* Drawn from the logo: marigold and ochre of the map, the terracotta of the
+   dress, the indigo sash, the black silhouette — on warm paper. */
+@theme {
+  --color-ink: #17110c;
+  --color-paper: #fbf5ea;
+  --color-sand: #ecd7b0;
+  --color-marigold: #e8a628;
+  --color-ochre: #9a5512;
+  --color-terracotta: #c2411c;
+  --color-indigo: #34418f;
+  --color-olive: #5f5a2e;
+
+  --font-serif: 'Libre Caslon Condensed', 'Times New Roman', serif;
+  --font-text: 'Libre Caslon Text', Georgia, serif;
+
+  --ease-silk: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-wipe: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html {
+  background: var(--color-ink);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: var(--color-ink);
+  font-family: var(--font-serif);
+  overflow-x: clip;
+}
+::selection {
+  background: var(--color-marigold);
+  color: var(--color-ink);
+}
+:focus-visible {
+  outline: 2px solid var(--color-marigold);
+  outline-offset: 3px;
+}
+
+/* Condensed serif capitals, tight; italic lines lean out */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+.display .it,
+.display.it {
+  font-style: italic;
+}
+/* Small serif capitals with wide tracking, for labels and buttons */
+.caps {
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  line-height: 1.7;
+}
+/* Reading text */
+.prose-s {
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* Scroll reveals: hidden until useReveals marks them in. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s var(--ease-silk),
+    transform 0.9s var(--ease-silk);
+  transition-delay: var(--d, 0s);
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* A thin band of the logo's patterned cloth, as a divider. */
+.kente {
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-terracotta) 0 28px,
+    var(--color-marigold) 28px 44px,
+    var(--color-ink) 44px 50px,
+    var(--color-indigo) 50px 78px,
+    var(--color-marigold) 78px 84px,
+    var(--color-ochre) 84px 112px
+  );
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 0.6s steps(3) infinite;
+}
+@keyframes grain {
+  0% { transform: translate3d(0, 0, 0); }
+  33% { transform: translate3d(-3%, 2%, 0); }
+  66% { transform: translate3d(2%, -3%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
